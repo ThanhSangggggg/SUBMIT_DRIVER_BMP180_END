@@ -210,7 +210,6 @@ static int32_t bmp180_calculate_pressure(int32_t raw_press, int32_t B5) {
     return p;
 }
 
-
 // Đọc nhiệt độ hoàn chỉnh
 static int bmp180_read_temperature(struct i2c_client *client) {
     int raw_temp;
@@ -223,9 +222,6 @@ static int bmp180_read_pressure(struct i2c_client *client) {
     int32_t raw_temp = bmp180_read_raw_temperature(client);
     int32_t B5 = bmp180_get_B5(raw_temp);
     int32_t raw_press = bmp180_read_raw_pressure(client);
-    
-    // if (raw_press < 0) return raw_press;  
-
     return bmp180_calculate_pressure(raw_press, B5);
 }
 
@@ -324,7 +320,6 @@ static int bmp180_probe(struct i2c_client *client, const struct i2c_device_id *i
         return -EIO;
     }
     
-
     printk(KERN_INFO "BMP180 driver installed\n");
     return 0;
 }
@@ -335,7 +330,6 @@ static void bmp180_remove(struct i2c_client *client)
     class_unregister(bmp180_class);
     class_destroy(bmp180_class);
     unregister_chrdev(major_number, DEVICE_NAME);
-
     printk(KERN_INFO "BMP180 driver removed\n");
 }
 
